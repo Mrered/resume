@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mrered Cio - 技术专家简历</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, 
+                rgba(255, 182, 193, 0.1) 0%,
+                rgba(173, 216, 230, 0.1) 25%,
+                rgba(221, 160, 221, 0.1) 50%,
+                rgba(255, 218, 185, 0.1) 75%,
+                rgba(240, 248, 255, 0.1) 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #2d3748;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 226, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .name {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #718096;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 
+                0 8px 32px rgba(31, 38, 135, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 12px 40px rgba(31, 38, 135, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category {
+            margin-bottom: 2rem;
+        }
+
+        .skill-category h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 0.8rem;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2d3748;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.2s ease;
+        }
+
+        .skill-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.05);
+        }
+
+        .progress-container {
+            margin-bottom: 1rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(226, 232, 240, 0.8);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #718096;
+            margin-top: 0.5rem;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .capability-list {
+            list-style: none;
+        }
+
+        .capability-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(226, 232, 240, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .capability-list li:last-child {
+            border-bottom: none;
+        }
+
+        .emoji {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .name {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="name">Mrered Cio</h1>
+            <p class="subtitle">全栈技术专家 · 工程体系建设者 · 跨领域创新者</p>
+        </header>
+
+        <div class="main-grid">
+            <aside class="sidebar">
+                <div class="card">
+                    <h2 class="card-title">📊 技能概览</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number">10+</span>
+                            <div class="stat-label">编程语言</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">20+</span>
+                            <div class="stat-label">云平台</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5+</span>
+                            <div class="stat-label">年经验</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100+</span>
+                            <div class="stat-label">项目经验</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="card-title">⚡ 核心竞争力</h2>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>全栈开发</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>DevOps & CI/CD</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>云平台架构</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>硬件开发</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>项目管理</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content">
+                <div class="section-grid">
+                    <div class="card">
+                        <h2 class="card-title">🧑‍💻 软件工程与开发</h2>
+                        
+                        <div class="skill-category">
+                            <h3>🧱 基础工具与开发环境</h3>
+                            <div class="skill-grid">
+                                <div class="skill-item">Shell Script</div>
+                                <div class="skill-item">Docker</div>
+                                <div class="skill-item">VS Code</div>
+                                <div class="skill-item">DevContainer</div>
+                                <div class="skill-item">Orbstack</div>
+                                <div class="skill-item">RegExp</div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>💻 编程语言</h3>
+                            <div class="skill-grid">
+                                <div class="skill-item">JavaScript</div>
+                                <div class="skill-item">TypeScript</div>
+                                <div class="skill-item">React</div>
+                                <div class="skill-item">Next.js</div>
+                                <div class="skill-item">Golang</div>
+                                <div class="skill-item">Python</div>
+                                <div class="skill-item">C/C++</div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>🔧 版本控制</h3>
+                            <ul class="capability-list">
+                                <li><span class="emoji">🔀</span>精通 Git 命令行及可视化操作，高效解决合并冲突</li>
+                                <li><span class="emoji">🔐</span>熟练使用 GPG/SSH 密钥进行安全管理</li>
+                                <li><span class="emoji">📋</span>熟悉 Issue 模板、自动化 Release 流程</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="card-title">⚙️ 运维、部署与自动化</h2>
+                        
+                        <div class="skill-category">
+                            <h3>🚀 CI/CD 与自动化</h3>
+                            <ul class="capability-list">
+                                <li><span class="emoji">🔄</span>精通 GitHub Actions 复用工作流设计</li>
+                                <li><span class="emoji">📦</span>GoReleaser + Homebrew 私有 Tap 自动化发布</li>
+                                <li><span class="emoji">🌐</span>Vercel、Cloudflare 自动化部署集成</li>
+                                <li><span class="emoji">🔗</span>Webhook 与平台联动的事件驱动部署</li>
+                            </ul>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>🖥️ 服务器运维</h3>
+                            <div class="skill-grid">
+                                <div class="skill-item">Linux</div>
+                                <div class="skill-item">Nginx</div>
+                                <div class="skill-item">Caddy</div>
+                                <div class="skill-item">PostgreSQL</div>
+                                <div class="skill-item">Redis</div>
+                                <div class="skill-item">Tailscale</div>
+                                <div class="skill-item">SafeLine WAF</div>
+                            </div>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>☁️ 云平台服务</h3>
+                            <div class="skill-grid">
+                                <div class="skill-item">AWS</div>
+                                <div class="skill-item">Azure</div>
+                                <div class="skill-item">阿里云</div>
+                                <div class="skill-item">Vercel</div>
+                                <div class="skill-item">Cloudflare</div>
+                                <div class="skill-item">Supabase</div>
+                                <div class="skill-item">Railway</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="card-title">🧩 工程体系与项目管理</h2>
+                        <ul class="capability-list">
+                            <li><span class="emoji">🛠️</span>构建可复用 GitHub Actions 工具链，提升团队效率</li>
+                            <li><span class="emoji">📝</span>项目模块化与模板化（vitepress-template, golang-template）</li>
+                            <li><span class="emoji">🔒</span>Bitwarden 团队密码和敏感信息安全管理</li>
+                            <li><span class="emoji">👥</span>领导小型技术项目开发经验</li>
+                            <li><span class="emoji">📖</span>撰写技术需求文档和产品文档</li>
+                            <li><span class="emoji">🤖</span>AI 工具融入自动化工作流（Cursor, Windsurf）</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="card-title">🔌 硬件开发与嵌入式</h2>
+                        
+                        <div class="skill-category">
+                            <h3>🔧 专业工具与设计</h3>
+                            <ul class="capability-list">
+                                <li><span class="emoji">📊</span>熟练使用示波器、万用表、信号发生器</li>
+                                <li><span class="emoji">🎯</span>立创EDA专业版电路设计</li>
+                                <li><span class="emoji">📋</span>4层PCB设计，滤波器和放大器电路</li>
+                                <li><span class="emoji">💻</span>Matlab Simulink 电气系统仿真</li>
+                                <li><span class="emoji">🔍</span>ARM架构，JTAG调试工具使用</li>
+                                <li><span class="emoji">📷</span>图像传感器、霍尔传感器、ADC实践</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="card-title">🎨 设计与其他技能</h2>
+                        <ul class="capability-list">
+                            <li><span class="emoji">🏗️</span>Shapr3D 工业级 3D 模型设计</li>
+                            <li><span class="emoji">📄</span>熟练使用 Office 套件进行文档处理</li>
+                            <li><span class="emoji">☁️</span>各类云文档协作、信息收集与展示</li>
+                            <li><span class="emoji">📸</span>摄影、图像处理及音频编辑</li>
+                            <li><span class="emoji">🎓</span>大学专科理论课程与工学一体化教学</li>
+                            <li><span class="emoji">👨‍🎓</span>独立指导学生完成小组毕业设计</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h2 class="card-title">📦 容器化与监控</h2>
+                        <div class="skill-category">
+                            <h3>🐳 容器技术</h3>
+                            <ul class="capability-list">
+                                <li><span class="emoji">🚢</span>Docker 容器构建、管理与编排</li>
+                                <li><span class="emoji">🔗</span>Docker Compose 多服务应用实战</li>
+                                <li><span class="emoji">💾</span>Docker 存储卷和网络管理</li>
+                                <li><span class="emoji">🏗️</span>多阶段构建等镜像优化技术</li>
+                                <li><span class="emoji">☸️</span>Kubernetes 核心理念和架构理解</li>
+                            </ul>
+                        </div>
+
+                        <div class="skill-category">
+                            <h3>📈 监控与可观测性</h3>
+                            <div class="skill-grid">
+                                <div class="skill-item">哪吒面板</div>
+                                <div class="skill-item">Uptime Kuma</div>
+                                <div class="skill-item">服务监控</div>
+                                <div class="skill-item">站点可用性</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // 简单的动画效果
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            observer.observe(card);
+        });
+
+        // 进度条动画
+        window.addEventListener('load', () => {
+            const progressFills = document.querySelectorAll('.progress-fill');
+            progressFills.forEach(fill => {
+                const width = fill.style.width;
+                fill.style.width = '0%';
+                setTimeout(() => {
+                    fill.style.width = width;
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
