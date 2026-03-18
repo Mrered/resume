@@ -41,9 +41,40 @@
         }
 
         .container {
-            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 2rem 3%;
+            max-width: 100%;
+        }
+
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1300px;
+                padding: 2rem;
+            }
+        }
+
+        @media (min-width: 1800px) {
+            .container {
+                max-width: 1600px;
+            }
+        }
+
+        @media (min-width: 2400px) {
+            .container {
+                max-width: 2000px;
+            }
+        }
+
+        @media (min-width: 3200px) {
+            .container {
+                max-width: 2600px;
+            }
+        }
+
+        @media (min-width: 4000px) {
+            .container {
+                max-width: 3200px;
+            }
         }
 
         .header {
@@ -228,9 +259,13 @@
         }
 
         .section-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            columns: 320px;
+            column-gap: 1.5rem;
+        }
+
+        .section-grid .card {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
         }
 
         .capability-list {
@@ -377,9 +412,14 @@
                     <!-- 新增：Presto 核心项目 -->
                     <div class="card">
                         <h2 class="card-title">🚀 核心项目：<a href="https://github.com/Presto-io" target="_blank" style="color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;">Presto<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#667eea" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></a></h2>
-                        <p style="margin-bottom: 1rem; color: #4a5568;">
-                            AI 原生文档转换平台<br>Markdown → Typst → PDF
-                        </p>
+                        <p style="margin-bottom: 1rem; color: #4a5568; font-size: 0.9rem;">AI 原生文档转换平台</p>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                            <span style="background: linear-gradient(135deg, #667eea15, #764ba215); color: #667eea; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem;">Markdown</span>
+                            <span style="color: #a0aec0; font-weight: 500;">→</span>
+                            <span style="background: linear-gradient(135deg, #667eea15, #764ba215); color: #667eea; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem;">Typst</span>
+                            <span style="color: #a0aec0; font-weight: 500;">→</span>
+                            <span style="background: linear-gradient(135deg, #667eea15, #764ba215); color: #667eea; padding: 0.4rem 0.8rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem;">PDF</span>
+                        </div>
 
                         <div class="skill-category">
                             <h3>⚡ 工程突破</h3>
