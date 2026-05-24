@@ -1,0 +1,269 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  brewforgeHighlights,
+  capabilities,
+  experience,
+  metrics,
+  prestoHighlights,
+  profile,
+  proofPoints,
+  skills,
+} from '../data/resume';
+
+interface Props {
+  theme?: string;
+}
+
+const { theme = 'playful' } = Astro.props;
+
+const rawEmphasisEntries = [
+  ['电气工程及其自动化', 'mark mark--yellow'],
+  ['教学、实训、班主任', 'mark mark--yellow'],
+  ['Presto-io', 'mark mark--code'],
+  ['Markdown -> Typst -> PDF', 'mark mark--code'],
+  ['30 秒超时', 'mark mark--code'],
+  ['URL 白名单', 'mark mark--code'],
+  ['SHA256 校验', 'mark mark--code'],
+  ['静态 JSON + CDN', 'mark mark--blue'],
+  ['四级信任模型', 'mark mark--blue'],
+  ['双 Job 隔离', 'mark mark--blue'],
+  ['Claude Code Skills / Agent Skill', 'mark mark--code'],
+  ['Brewforge', 'mark mark--code'],
+  ['homebrew-chinese', 'mark mark--code'],
+  ['homebrew-extras', 'mark mark--code'],
+  ['homebrew-more', 'mark mark--code'],
+  ['GitHub Actions', 'mark mark--code'],
+  ['brew test-bot', 'mark mark--code'],
+  ['brew livecheck', 'mark mark--code'],
+  ['自动化 bump', 'mark mark--blue'],
+  ['电力电子', 'mark mark--yellow'],
+  ['电力系统分析', 'mark mark--code'],
+  ['高压电工特种作业证', 'mark mark--yellow'],
+  ['Buck、Boost、SEPIC', 'mark mark--code'],
+  ['DCDC', 'mark mark--code'],
+  ['Simulink', 'mark mark--code'],
+  ['双闭环 PID', 'mark mark--blue'],
+  ['任务驱动', 'mark mark--blue'],
+  ['安全意识、规范意识和责任意识', 'mark mark--yellow'],
+  ['规则、流程、分工和反馈', 'mark mark--blue'],
+  ['AI 赋能教育', 'mark mark--yellow'],
+  ['工作流', 'mark mark--blue'],
+  ['模板、规范、自动化和可复用工具', 'mark mark--blue'],
+] satisfies Array<[string, string]>;
+
+const emphasisEntries = [...rawEmphasisEntries].sort((a, b) => b[0].length - a[0].length);
+
+function escapeHtml(text: string) {
+  return text
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+function renderText(text: string) {
+  const nodes: Array<string | { text: string; className: string }> = [];
+  let index = 0;
+
+  while (index < text.length) {
+    let matched: [string, string] | undefined;
+
+    for (const [keyword, className] of emphasisEntries) {
+      if (text.startsWith(keyword, index)) {
+        matched = [keyword, className];
+        break;
+      }
+    }
+
+    if (matched) {
+      nodes.push({ text: matched[0], className: matched[1] });
+      index += matched[0].length;
+      continue;
+    }
+
+    let nextIndex = text.length;
+    for (const [keyword] of emphasisEntries) {
+      const found = text.indexOf(keyword, index + 1);
+      if (found !== -1 && found < nextIndex) {
+        nextIndex = found;
+      }
+    }
+
+    nodes.push(text.slice(index, nextIndex));
+    index = nextIndex;
+  }
+
+  return nodes
+    .map((node) =>
+      typeof node === 'string'
+        ? escapeHtml(node)
+        : `<span class="${node.className}">${escapeHtml(node.text)}</span>`
+    )
+    .join('');
+}
+---
+
+<BaseLayout title={`${profile.name} - 简历`} description={profile.summary}>
+  <main class={`shell theme-${theme}`}>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <p class="eyebrow">Resume / AI-native engineering</p>
+        <h1 id="hero-title">{profile.name}</h1>
+        <p class="role">{profile.role}</p>
+        <p class="summary" set:html={renderText(profile.summary)} />
+        <div class="proof-row" aria-label="核心关键词">
+          {proofPoints.map((point) => <span>{point}</span>)}
+        </div>
+        <div class="link-row" aria-label="个人链接">
+          {profile.links.map((link) => (
+            <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+          ))}
+        </div>
+      </div>
+      <aside class="hero__panel" aria-label="关键指标">
+        <img
+          class="avatar"
+          src="/avatar.png"
+          alt="Mrered Cio 的 GitHub 头像"
+          loading="eager"
+          width="160"
+          height="160"
+        />
+        {metrics.map((metric) => (
+          <div>
+            <strong>{metric.value}</strong>
+            <span>{metric.label}</span>
+          </div>
+        ))}
+      </aside>
+    </section>
+
+    <section class="section section--intro" aria-labelledby="presto-title">
+      <div class="section__header">
+        <p class="eyebrow">Featured project</p>
+        <h2 id="presto-title">
+          <a class="section-link" href="https://github.com/Presto-io" target="_blank" rel="noreferrer">
+            Presto-io 项目经验
+            <span aria-hidden="true">↗</span>
+          </a>
+        </h2>
+        <p>
+          <Fragment
+            set:html={renderText(
+            'Presto-io 是我最近最完整的一次平台型产品实践。它不是单点工具，而是一组围绕文档转换、模板生态、AI 工作流和分发安全建立起来的系统。'
+          )}
+          />
+        </p>
+      </div>
+      <div class="project-grid">
+        {prestoHighlights.map((item) => (
+          <article class="project-card">
+            <div class="project-card__top">
+              <h3>{item.title}</h3>
+              <div class="tag-row">
+                {item.tags.map((tag) => <span>{tag}</span>)}
+              </div>
+            </div>
+            <p set:html={renderText(item.body)} />
+            <ul>
+              {item.points.map((point) => <li set:html={renderText(point)} />)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section section--brewforge" aria-labelledby="brewforge-title">
+      <div class="section__header">
+        <p class="eyebrow">Open source packaging</p>
+        <h2 id="brewforge-title">
+          <a class="section-link" href="https://github.com/Brewforge" target="_blank" rel="noreferrer">
+            Brewforge 开源贡献
+            <span aria-hidden="true">↗</span>
+          </a>
+        </h2>
+        <p>
+          <Fragment
+            set:html={renderText(
+            'Brewforge 是围绕 Homebrew 社区建立的开源组织。我参与维护多个 Tap，把软件收录、版本更新、CI 检查和用户反馈流程持续跑起来。'
+          )}
+          />
+        </p>
+      </div>
+      <div class="project-grid project-grid--compact">
+        {brewforgeHighlights.map((item) => (
+          <article class="project-card project-card--compact">
+            <div class="project-card__top">
+              <h3>{item.title}</h3>
+              <div class="tag-row">
+                {item.tags.map((tag) => <span>{tag}</span>)}
+              </div>
+            </div>
+            <p set:html={renderText(item.body)} />
+            <ul>
+              {item.points.map((point) => <li set:html={renderText(point)} />)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section split" aria-labelledby="skills-title">
+      <div class="section__header">
+        <p class="eyebrow">Capabilities</p>
+        <h2 id="skills-title">能力结构</h2>
+        <p set:html={renderText('这份简历的主线不是单一身份，而是把电气专业、职业教育、班级治理、AI 工具和开源工程放在同一个工作系统里。')} />
+      </div>
+      <div class="capability-list">
+        {capabilities.map((item) => (
+          <article>
+            <h3>{item.title}</h3>
+            <p set:html={renderText(item.body)} />
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="stack-title">
+      <div class="section__header compact">
+        <p class="eyebrow">Stack</p>
+        <h2 id="stack-title">技术栈与领域</h2>
+      </div>
+      <div class="skill-board">
+        {skills.map((group) => (
+          <article>
+            <h3>{group.title}</h3>
+            <div class="tag-row">
+              {group.items.map((item) => <span>{item}</span>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section timeline" aria-labelledby="timeline-title">
+      <div class="section__header compact">
+        <p class="eyebrow">Experience</p>
+        <h2 id="timeline-title">经历主线</h2>
+      </div>
+      <div class="timeline__items">
+        {experience.map((item) => (
+          <article>
+            <time>{item.time}</time>
+            <div>
+              <h3>{item.name}</h3>
+              <p class="timeline__role">{item.role}</p>
+              <p set:html={renderText(item.description)} />
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>{profile.location}</span>
+      <a href="https://github.com/Mrered" target="_blank" rel="noreferrer">github.com/Mrered</a>
+    </footer>
+  </main>
+</BaseLayout>

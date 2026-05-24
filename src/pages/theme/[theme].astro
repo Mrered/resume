@@ -1,0 +1,13 @@
+---
+import ResumePage from '../../components/ResumePage.astro';
+
+export function getStaticPaths() {
+  return ['playful', 'editorial', 'terminal', 'notebook'].map((theme) => ({
+    params: { theme },
+  }));
+}
+
+const { theme } = Astro.params;
+---
+
+<ResumePage theme={theme} />
