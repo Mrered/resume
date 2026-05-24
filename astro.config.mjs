@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://resume.mre.red',
+  site: 'https://cio.mre.red',
 });

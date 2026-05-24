@@ -7,7 +7,7 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const siteUrl = Astro.site ?? new URL('https://resume.mre.red');
+const siteUrl = Astro.site ?? new URL('https://cio.mre.red');
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl);
 const previewImage = new URL('/share-avatar.jpg', siteUrl);
 ---
