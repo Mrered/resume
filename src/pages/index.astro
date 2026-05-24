@@ -1,0 +1,129 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  capabilities,
+  experience,
+  metrics,
+  prestoHighlights,
+  profile,
+  skills,
+} from '../data/resume';
+---
+
+<BaseLayout title={`${profile.name} - 简历`} description={profile.summary}>
+  <main class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <p class="eyebrow">Resume / AI-native engineering</p>
+        <h1 id="hero-title">{profile.name}</h1>
+        <p class="role">{profile.role}</p>
+        <p class="summary">{profile.summary}</p>
+        <div class="link-row" aria-label="个人链接">
+          {profile.links.map((link) => (
+            <a href={link.href} target="_blank" rel="noreferrer">{link.label}</a>
+          ))}
+        </div>
+      </div>
+      <aside class="hero__panel" aria-label="关键指标">
+        <img
+          class="avatar"
+          src="https://avatars.githubusercontent.com/u/34948506?v=4"
+          alt="Mrered Cio 的 GitHub 头像"
+          loading="eager"
+          width="160"
+          height="160"
+        />
+        {metrics.map((metric) => (
+          <div>
+            <strong>{metric.value}</strong>
+            <span>{metric.label}</span>
+          </div>
+        ))}
+      </aside>
+    </section>
+
+    <section class="section section--intro" aria-labelledby="presto-title">
+      <div class="section__header">
+        <p class="eyebrow">Featured project</p>
+        <h2 id="presto-title">Presto-io 项目经验</h2>
+        <p>
+          Presto-io 是我最近最完整的一次平台型产品实践。它不是单点工具，而是一组围绕文档转换、模板生态、AI
+          工作流和分发安全建立起来的系统。
+        </p>
+      </div>
+      <div class="project-grid">
+        {prestoHighlights.map((item) => (
+          <article class="project-card">
+            <div class="project-card__top">
+              <h3>{item.title}</h3>
+              <div class="tag-row">
+                {item.tags.map((tag) => <span>{tag}</span>)}
+              </div>
+            </div>
+            <p>{item.body}</p>
+            <ul>
+              {item.points.map((point) => <li>{point}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section split" aria-labelledby="skills-title">
+      <div class="section__header">
+        <p class="eyebrow">Capabilities</p>
+        <h2 id="skills-title">能力结构</h2>
+        <p>我更关注能力之间如何配合：架构把系统立起来，自动化让它持续运转，AI 工作流提高迭代速度。</p>
+      </div>
+      <div class="capability-list">
+        {capabilities.map((item) => (
+          <article>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="stack-title">
+      <div class="section__header compact">
+        <p class="eyebrow">Stack</p>
+        <h2 id="stack-title">技术栈与领域</h2>
+      </div>
+      <div class="skill-board">
+        {skills.map((group) => (
+          <article>
+            <h3>{group.title}</h3>
+            <div class="tag-row">
+              {group.items.map((item) => <span>{item}</span>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section timeline" aria-labelledby="timeline-title">
+      <div class="section__header compact">
+        <p class="eyebrow">Experience</p>
+        <h2 id="timeline-title">经历主线</h2>
+      </div>
+      <div class="timeline__items">
+        {experience.map((item) => (
+          <article>
+            <time>{item.time}</time>
+            <div>
+              <h3>{item.name}</h3>
+              <p class="timeline__role">{item.role}</p>
+              <p>{item.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>{profile.location}</span>
+      <a href="https://github.com/Mrered" target="_blank" rel="noreferrer">github.com/Mrered</a>
+    </footer>
+  </main>
+</BaseLayout>
