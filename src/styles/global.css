@@ -66,6 +66,14 @@ body {
   background: var(--page-bg);
 }
 
+.wechat-share-image {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0.01;
+  pointer-events: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;
